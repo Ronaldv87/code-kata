@@ -1,4 +1,4 @@
-package com.rstraub.java.tennis;
+package com.rversantvoort.java.tennis;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,5 +21,10 @@ class TennisScoreTest {
   void shouldReturnLoveFifteenWhenPlayerOneHasZeroPointAndPlayerTwoHasOnePoint() {
     assertThat(TennisScore.score(0, 1)).isEqualTo("love-fifteen");
 
+  }
+
+  @Test
+  void shouldReturnFifteenAllWhenBothPlayersHaveOnePoint() {
+    assertThat(TennisScore.score(1, 1)).isEqualTo("fifteen-all");
   }
 }
