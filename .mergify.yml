@@ -1,0 +1,10 @@
+pull_request_rules:
+  - name: merge dependabot PR's
+    conditions:
+      - or:
+          - author=dependabot
+          - author=dependabot[bot]
+      - status-success=Build with Maven
+    actions:
+      merge:
+        method: merge
