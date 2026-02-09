@@ -2,118 +2,42 @@ package com.rversantvoort.java.tennis;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.jupiter.api.Test;
+import java.util.stream.Stream;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 // Red, Green, Refactor
 class TennisScoreTest {
 
-  @Test
-  void shouldReturnLoveAllWhenBothPlayersHaveZeroPoints() {
-    assertThat(TennisScore.score(0, 0)).isEqualTo("love-all");
+  static Stream<Arguments> tennisScores() {
+    return Stream.of(Arguments.of(0, 0, "love-all"),
+                     Arguments.of(1, 0, "fifteen-love"),
+                     Arguments.of(0, 1, "love-fifteen"),
+                     Arguments.of(1, 1, "fifteen-all"),
+                     Arguments.of(2, 0, "thirty-love"),
+                     Arguments.of(2, 1, "thirty-fifteen"),
+                     Arguments.of(0, 2, "love-thirty"),
+                     Arguments.of(1, 2, "fifteen-thirty"),
+                     Arguments.of(2, 2, "thirty-all"),
+                     Arguments.of(3, 0, "forty-love"),
+                     Arguments.of(3, 1, "forty-fifteen"),
+                     Arguments.of(3, 2, "forty-thirty"),
+                     Arguments.of(0, 3, "love-forty"),
+                     Arguments.of(1, 3, "fifteen-forty"),
+                     Arguments.of(2, 3, "thirty-forty"),
+                     Arguments.of(3, 3, "deuce"),
+                     Arguments.of(4, 2, "winner player one"),
+                     Arguments.of(2, 4, "winner player two"),
+                     Arguments.of(4, 3, "advantage player one"),
+                     Arguments.of(3, 4, "advantage player two"),
+                     Arguments.of(5, 3, "winner player one"),
+                     Arguments.of(3, 5, "winner player two"));
   }
 
-  @Test
-  void shouldReturnFifteenLoveWhenPlayerOneHasOnePointAndPlayerTwoHasZeroPoints() {
-    assertThat(TennisScore.score(1, 0)).isEqualTo("fifteen-love");
-  }
-
-  @Test
-  void shouldReturnLoveFifteenWhenPlayerOneHasZeroPointAndPlayerTwoHasOnePoint() {
-    assertThat(TennisScore.score(0, 1)).isEqualTo("love-fifteen");
-  }
-
-  @Test
-  void shouldReturnFifteenAllWhenBothPlayersHaveOnePoint() {
-    assertThat(TennisScore.score(1, 1)).isEqualTo("fifteen-all");
-  }
-
-  @Test
-  void shouldReturnThirtyLoveWhenPlayerOneHasTwoPointsAndPlayerTwoHasNoPoints() {
-    assertThat(TennisScore.score(2, 0)).isEqualTo("thirty-love");
-  }
-
-  @Test
-  void shouldReturnThirtyFifteenWhenPlayerOneHasTwoPointsAndPlayerTwoHasOnePoint() {
-    assertThat(TennisScore.score(2, 1)).isEqualTo("thirty-fifteen");
-  }
-
-  @Test
-  void shouldReturnLoveThirtyWhenPlayerOneHasZeroPointsAndPlayerTwoHasOnePoint() {
-    assertThat(TennisScore.score(0, 2)).isEqualTo("love-thirty");
-  }
-
-  @Test
-  void shouldReturnFifteenThirtyWhenPlayerOneHasOnePointAndPlayerTwoHasTwoPoints() {
-    assertThat(TennisScore.score(1, 2)).isEqualTo("fifteen-thirty");
-  }
-
-  @Test
-  void shouldReturnThirtyAllWhenBothPlayersHaveTwoPoints() {
-    assertThat(TennisScore.score(2, 2)).isEqualTo("thirty-all");
-  }
-
-  @Test
-  void shouldReturnFortyLoveWhenPlayerOneHasThreePointsAndPlayerTwoNoPoints() {
-    assertThat(TennisScore.score(3, 0)).isEqualTo("forty-love");
-  }
-
-  @Test
-  void shouldReturnFortyFifteenWhenPlayerOneHasThreePointsAndPlayerTwoOnePoint() {
-    assertThat(TennisScore.score(3, 1)).isEqualTo("forty-fifteen");
-  }
-
-  @Test
-  void shouldReturnFortyThirtyWhenPlayerOneHasThreePointsAndPlayerTwoHasTwoPoints() {
-    assertThat(TennisScore.score(3, 2)).isEqualTo("forty-thirty");
-  }
-
-  @Test
-  void shouldReturnLoveFortyWhenPlayerOneHasZeroPointsAndPlayerTwoHasThreePoints() {
-    assertThat(TennisScore.score(0, 3)).isEqualTo("love-forty");
-  }
-
-  @Test
-  void shouldReturnFifteenFortyWhenPlayerOneHasOnePointAndPlayerTwoHasThreePoints() {
-    assertThat(TennisScore.score(1, 3)).isEqualTo("fifteen-forty");
-  }
-
-  @Test
-  void shouldReturnThirtyFortyWhenPlayerOneHasTwoPointsAndPlayerTwhoHasThreePoints() {
-    assertThat(TennisScore.score(2, 3)).isEqualTo("thirty-forty");
-  }
-
-  @Test
-  void shouldReturnDeuceWhenBothPlayersHaveThreePoints() {
-    assertThat(TennisScore.score(3, 3)).isEqualTo("deuce");
-  }
-
-  @Test
-  void shouldReturnWinnerPlayerOneWhenPlayerOneHasFourPointsAndPlayerTwoHasTwoPoints() {
-    assertThat(TennisScore.score(4, 2)).isEqualTo("winner player one");
-  }
-
-  @Test
-  void shouldReturnWinnerPlayerTwoWhenPlayerTwoHasFourPointsAndPlayerOneHasTwoPoints() {
-    assertThat(TennisScore.score(2, 4)).isEqualTo("winner player two");
-  }
-
-  @Test
-  void shouldReturnAdvantageForPlayerOneWhenPlayerOneHasAdvantage() {
-    assertThat(TennisScore.score(4, 3)).isEqualTo("advantage player one");
-  }
-
-  @Test
-  void shouldReturnAdvantageForPlayerTwoWhenPlayerTwoHasAdvantage() {
-    assertThat(TennisScore.score(3, 4)).isEqualTo("advantage player two");
-  }
-
-  @Test
-  void shouldReturnWinnerPlayerOneWhenPlayerOneHasFivePointsAndPlayerTwoHasThreePoints() {
-    assertThat(TennisScore.score(5, 3)).isEqualTo("winner player one");
-  }
-
-  @Test
-  void shouldReturnWinnerPlayerTwoWhenPlayerOneHasThreePointsAndPlayerTwoHasFivePoints() {
-    assertThat(TennisScore.score(3, 5)).isEqualTo("winner player two");
+  @ParameterizedTest
+  @MethodSource("tennisScores")
+  void shouldReturnCorrectStance(int playerOne, int playerTwo, String expected) {
+    assertThat(TennisScore.score(playerOne, playerTwo)).isEqualTo(expected);
   }
 }
