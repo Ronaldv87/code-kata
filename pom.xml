@@ -52,6 +52,12 @@
       <scope>test</scope>
       <version>${mockito.version}</version>
     </dependency>
+      <dependency>
+          <groupId>org.projectlombok</groupId>
+          <artifactId>lombok</artifactId>
+          <version>1.18.42</version>
+          <scope>provided</scope>
+      </dependency>
   </dependencies>
   <groupId>com.rstraub</groupId>
   <modelVersion>4.0.0</modelVersion>
