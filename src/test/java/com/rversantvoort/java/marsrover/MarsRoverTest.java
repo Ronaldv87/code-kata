@@ -1,15 +1,15 @@
 package com.rversantvoort.java.marsrover;
 
+import java.util.stream.Stream;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
 import static com.rversantvoort.java.marsrover.Direction.EAST;
 import static com.rversantvoort.java.marsrover.Direction.NORTH;
 import static com.rversantvoort.java.marsrover.Direction.SOUTH;
 import static com.rversantvoort.java.marsrover.Direction.WEST;
 import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.stream.Stream;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 class MarsRoverTest {
 
@@ -36,7 +36,7 @@ class MarsRoverTest {
     assertThat(movedMarsRover.y()).isEqualTo(y);
   }
 
-  @ParameterizedTest(name = "Test: {index} => When the marsrover that is facing {0} turns left, then faces {1}")
+  @ParameterizedTest(name = "Test: {index} => When the marsrover that is facing {0} turns left, it faces {1}")
   @MethodSource("marsRoverLeftTurnInput")
   void marsRoverTurnsLeft(Direction currentFacingDirection, Direction newFacingDirection) {
     MarsRover marsRover = new MarsRover(currentFacingDirection, 3, 3);
