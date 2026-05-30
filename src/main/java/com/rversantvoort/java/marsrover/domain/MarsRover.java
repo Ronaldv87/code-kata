@@ -1,18 +1,23 @@
-package com.rversantvoort.java.marsrover;
+package com.rversantvoort.java.marsrover.domain;
 
-import static com.rversantvoort.java.marsrover.Direction.EAST;
-import static com.rversantvoort.java.marsrover.Direction.NORTH;
-import static com.rversantvoort.java.marsrover.Direction.SOUTH;
-import static com.rversantvoort.java.marsrover.Direction.WEST;
+import static com.rversantvoort.java.marsrover.domain.Direction.EAST;
+import static com.rversantvoort.java.marsrover.domain.Direction.NORTH;
+import static com.rversantvoort.java.marsrover.domain.Direction.SOUTH;
+import static com.rversantvoort.java.marsrover.domain.Direction.WEST;
 
 public record MarsRover(Direction direction, int x, int y) {
 
   public MarsRover moveForward() {
+    Coordinates nextCoordinates = nextCoordinates();
+    return new MarsRover(direction, nextCoordinates.x(), nextCoordinates.y());
+  }
+
+  public Coordinates nextCoordinates() {
     return switch (direction) {
-      case EAST -> withX(x + 1);
-      case NORTH -> withY(y + 1);
-      case WEST -> withX(x - 1);
-      case SOUTH -> withY(y - 1);
+      case NORTH -> new Coordinates(x, y + 1);
+      case WEST -> new Coordinates(x - 1, y);
+      case SOUTH -> new Coordinates(x, y - 1);
+      case EAST -> new Coordinates(x + 1, y);
     };
   }
 
@@ -34,14 +39,6 @@ public record MarsRover(Direction direction, int x, int y) {
       case WEST -> NORTH;
     };
     return withDirection(newDirection);
-  }
-
-  private MarsRover withX(int newX) {
-    return new MarsRover(this.direction, newX, this.y);
-  }
-
-  private MarsRover withY(int newY) {
-    return new MarsRover(this.direction, this.x, newY);
   }
 
   private MarsRover withDirection(Direction newDirection) {

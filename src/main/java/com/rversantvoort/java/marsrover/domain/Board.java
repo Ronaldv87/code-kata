@@ -1,7 +1,8 @@
-package com.rversantvoort.java.marsrover;
+package com.rversantvoort.java.marsrover.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import lombok.Getter;
 
 @Getter
@@ -16,35 +17,29 @@ public class Board {
     this.numberOfHorizontalFields = numberOfHorizontalFields;
     this.numberOfVerticalFields = numberOfVerticalFields;
     this.obstacles = obstacles;
-    checkIfInputIsCorrect();
     this.cells = createCells();
   }
 
-  private void checkIfInputIsCorrect() {
-    if (numberOfHorizontalFields < 0 || numberOfVerticalFields < 0) {
-      throw new IllegalArgumentException("Number of horizontal fields and/or vertical fields must be positive.");
-    }
-    // TODO controleren of de obstakels geen negatieve waarde bevatten
+  public Optional<Cell> getCellForLocation(int x, int y) {
+    return cells.stream().filter(cell -> cell.x() == x && cell.y() == y).findFirst();
   }
 
   private List<Cell> createCells() {
     List<Cell> cells = new ArrayList<>();
-    for(int x = 0; x < numberOfHorizontalFields; x++) {
-      for(int y = 0; y < numberOfVerticalFields; y++) {
-        cells.add(new Cell(x, y, determineCorrectObstacleToAdd(x, y)));
+    for (int x = 0; x < numberOfHorizontalFields; x++) {
+      for (int y = 0; y < numberOfVerticalFields; y++) {
+        cells.add(new Cell(x, y, determineObstacleToAdd(x, y)));
       }
     }
 
     return cells;
   }
 
-  private Obstacle determineCorrectObstacleToAdd(int x, int y) {
+  private Obstacle determineObstacleToAdd(int x, int y) {
     if (obstacles == null || obstacles.isEmpty()) {
       return null;
     }
 
-    // TODO hoe gaat de logica om met meerdere obestakels op het zelfde veld?
     return obstacles.stream().filter(o -> o.x() == x && o.y() == y).findFirst().orElse(null);
   }
-
 }

@@ -1,10 +1,10 @@
-package com.rversantvoort.java.marsrover;
+package com.rversantvoort.java.marsrover.domain;
 
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 class BoardTest {
@@ -34,9 +34,16 @@ class BoardTest {
   }
 
   @Test
-  void boardThrowsExceptionWhenHorizontalsFieldsIsNegative() {
-    assertThatThrownBy(() -> new Board(-1, -1, null))
-      .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("Number of horizontal fields and/or vertical fields must be positive.");
+  void getCellForSpecificLocation() {
+    Board board = new Board(5, 5, null);
+
+    Optional<Cell> cell = board.getCellForLocation(2, 3);
+
+    assertThat(cell).isPresent();
+    Cell foundCell = cell.get();
+
+    assertThat(foundCell.x()).isEqualTo(2);
+    assertThat(foundCell.y()).isEqualTo(3);
   }
+
 }

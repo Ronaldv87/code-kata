@@ -1,4 +1,4 @@
-package com.rversantvoort.java.marsrover;
+package com.rversantvoort.java.marsrover.domain;
 
 import org.junit.jupiter.api.Test;
 
@@ -11,14 +11,14 @@ class CellTest {
     Obstacle obstacle = new Obstacle(1, 1);
     Cell cell = new Cell(1, 1, obstacle);
 
-    assertThat(cell.obstacle()).isEqualTo(obstacle);
+    assertThat(cell.hasObstacle()).isTrue();
   }
 
   @Test
   void cellDoesNotHaveObstacle() {
     Cell cell = new Cell(1, 1, null);
 
-    assertThat(cell.obstacle()).isNull();
+    assertThat(cell.hasObstacle()).isFalse();
   }
 
 }
