@@ -7,6 +7,20 @@
   <build>
     <plugins>
       <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <groupId>org.apache.maven.plugins</groupId>
+        <version>3.13.0</version>
+        <configuration>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>1.18.42</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
+      <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <groupId>org.apache.maven.plugins</groupId>
         <version>3.3.0</version>
@@ -38,7 +52,7 @@
       <artifactId>assertj-core</artifactId>
       <groupId>org.assertj</groupId>
       <scope>test</scope>
-      <version>3.27.6</version>
+      <version>3.27.7</version>
     </dependency>
     <dependency>
       <artifactId>mockito-core</artifactId>

@@ -1,4 +1,4 @@
-package com.rversantvoort.java.marsrover.navigation;
+package com.rversantvoort.java.marsrover.service;
 
 public enum Command {
   FORWARD,

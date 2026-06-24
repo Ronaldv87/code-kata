@@ -1,9 +1,9 @@
-package com.rversantvoort.java.marsrover.domain;
+package com.rversantvoort.java.marsrover.rover;
 
-import static com.rversantvoort.java.marsrover.domain.Direction.EAST;
-import static com.rversantvoort.java.marsrover.domain.Direction.NORTH;
-import static com.rversantvoort.java.marsrover.domain.Direction.SOUTH;
-import static com.rversantvoort.java.marsrover.domain.Direction.WEST;
+import static com.rversantvoort.java.marsrover.rover.Direction.EAST;
+import static com.rversantvoort.java.marsrover.rover.Direction.NORTH;
+import static com.rversantvoort.java.marsrover.rover.Direction.SOUTH;
+import static com.rversantvoort.java.marsrover.rover.Direction.WEST;
 
 public record MarsRover(Direction direction, int x, int y) {
 

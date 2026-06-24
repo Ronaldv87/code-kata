@@ -1,4 +1,4 @@
-package com.rversantvoort.java.marsrover.domain;
+package com.rversantvoort.java.marsrover.rover;
 
 public enum Direction {
   NORTH,

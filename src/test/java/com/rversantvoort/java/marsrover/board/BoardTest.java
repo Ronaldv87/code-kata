@@ -1,4 +1,4 @@
-package com.rversantvoort.java.marsrover.domain;
+package com.rversantvoort.java.marsrover.board;
 
 import java.util.List;
 import java.util.Optional;

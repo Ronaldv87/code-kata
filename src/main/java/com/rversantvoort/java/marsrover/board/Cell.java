@@ -1,4 +1,4 @@
-package com.rversantvoort.java.marsrover.domain;
+package com.rversantvoort.java.marsrover.board;
 
 public record Cell(int x, int y, Obstacle obstacle) {
 
