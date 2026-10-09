@@ -8,6 +8,7 @@ import com.rversantvoort.java.marsrover.rover.Coordinates;
 import com.rversantvoort.java.marsrover.rover.MarsRover;
 import com.rversantvoort.java.marsrover.service.MoveResult.Blocked;
 import com.rversantvoort.java.marsrover.service.MoveResult.Moved;
+import java.util.List;
 import java.util.Optional;
 
 public class MarsRoverNavigator {
@@ -18,6 +19,28 @@ public class MarsRoverNavigator {
   public MarsRoverNavigator(MarsRover marsrover, Board board) {
     this.marsrover = marsrover;
     this.board = board;
+  }
+
+  public MoveResult move(List<Command> commands) {
+    MoveResult moveResult = null;
+    MarsRoverNavigator navigator = this;
+
+    if (commands.isEmpty()) {
+      return new MoveResult.Moved(marsrover);
+    }
+
+    for (Command command : commands) {
+      moveResult = navigator.move(command);
+
+      switch (moveResult) {
+        case Moved(MarsRover rover) -> navigator = new MarsRoverNavigator(rover, board);
+        case Blocked _ -> {
+          return moveResult;
+        }
+      }
+    }
+
+    return moveResult;
   }
 
   public MoveResult move(Command command) {
@@ -38,5 +61,4 @@ public class MarsRoverNavigator {
 
     return cellToMoveTo.isPresent() && !cellToMoveTo.get().hasObstacle();
   }
-
 }

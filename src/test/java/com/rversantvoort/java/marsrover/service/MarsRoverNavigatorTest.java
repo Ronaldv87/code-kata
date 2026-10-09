@@ -17,6 +17,7 @@ import com.rversantvoort.java.marsrover.service.MoveResult.Moved;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Named;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -43,7 +44,7 @@ class MarsRoverNavigatorTest {
 
     switch (result) {
       case Moved m -> assertThat(m.rover()).isEqualTo(expectedMarsRover);
-      case Blocked _ -> fail("Should not have moved");
+      case Blocked _ -> fail("Should have moved");
     }
   }
 
@@ -57,6 +58,50 @@ class MarsRoverNavigatorTest {
     switch (result) {
       case Moved _ -> fail("Should not have moved");
       case Blocked b -> assertThat(b.rover()).isEqualTo(marsRover);
+    }
+  }
+
+  @Test
+  void marsRoverHasCompletedMovePath() {
+    MarsRover expectedMarsRover = new MarsRover(NORTH, 3, 3);
+    MarsRoverNavigator navigator = navigator();
+    List<Command> commands = List.of(FORWARD, TURN_RIGHT, FORWARD, TURN_LEFT, FORWARD, TURN_RIGHT, FORWARD, TURN_LEFT);
+
+    MoveResult result = navigator.move(commands);
+
+    switch (result) {
+      case Moved m -> assertThat(m.rover()).isEqualTo(expectedMarsRover);
+      case Blocked _ -> fail("Should have moved");
+    }
+  }
+
+  @Test
+  void marsRoverCannotCompleteBlockedPath() {
+    MarsRover marsRover = new MarsRover(NORTH, 1, 1);
+    MarsRover expectedMarsRover = new MarsRover(NORTH, 2, 2);
+    MarsRoverNavigator navigator = navigatorWithObstacleAhead(marsRover);
+    List<Command> commands = List.of(FORWARD, TURN_RIGHT, FORWARD, TURN_LEFT, FORWARD, TURN_RIGHT, FORWARD, TURN_LEFT);
+
+    MoveResult result = navigator.move(commands);
+
+    switch (result) {
+      case Moved _ -> fail("Should not have moved");
+      case Blocked b -> assertThat(b.rover()).isEqualTo(expectedMarsRover);
+    }
+  }
+
+  @Test
+  void marsRoverDoesNotMoveWhenNotGivenAnyCommands() {
+    MarsRover marsRover = new MarsRover(NORTH, 1, 1);
+    MarsRover expectedMarsRover = new MarsRover(NORTH, 1, 1);
+    MarsRoverNavigator navigator = navigatorWithObstacleAhead(marsRover);
+    List<Command> commands = List.of();
+
+    MoveResult result = navigator.move(commands);
+
+    switch (result) {
+      case Moved m -> assertThat(m.rover()).isEqualTo(expectedMarsRover);
+      case Blocked _ -> fail("Should have moved");
     }
   }
 
