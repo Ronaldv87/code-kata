@@ -20,8 +20,8 @@ class MarsRoverParserTest {
 
   static Stream<Arguments> parserInputs() {
     return Stream.of(Arguments.of(Named.of("Test for invalid inputs", "x; y"), "Input can only contain numbers"),
-                     Arguments.of(Named.of("Test for empty inputs", ""), "Input must contain exactly 2 values"),
-                     Arguments.of(Named.of("Test for too many inputs", "5; 5; 5"), "Input must contain exactly 2 values"));
+                     Arguments.of(Named.of("Test for empty inputs", ""), "Input must contain 2 or 3 columns"),
+                     Arguments.of(Named.of("Test for too many inputs", "5; 5; 5; 5"), "Input must contain 2 or 3 columns"));
   }
 
   @Test
